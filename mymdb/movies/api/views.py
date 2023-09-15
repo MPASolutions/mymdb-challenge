@@ -65,14 +65,6 @@ def format_movie(i):
         dir = json.loads("{}")
 
     i['director'] = dir
-    for a in i["actors"]:
-        try:
-            act = CharacterMovieSerializer(Character.objects.get(id=a[q])).data
-            act["person"] = PersonMovieSerializer(Person.objects.get(id=int(act["person"]))).data
-        except:
-            act = json.loads("{}")
-        i['actors'][q] = act
-        q += 1
     for s in i['scripts']:
         try:
             per = PersonMovieSerializer(Person.objects.get(id=s)).data
@@ -80,15 +72,20 @@ def format_movie(i):
             per = json.loads("{}")
         i["scripts"][k] = per
         k += 1
-    print (i)
+    for a in i["actors"]:
+        try:
+            act = CharacterMovieSerializer(Character.objects.get(id=a)).data
+            act["person"] = PersonMovieSerializer(Person.objects.get(id=int(act["person"]))).data
+        except:
+            act = json.loads("{}")
+        i['actors'][q] = act
+        q += 1
     for r in i["reviews"]:
         print(Review.objects.all())
         
         try:
             rev = ReviewMovieSerializer(Review.objects.get(id=r)).data
-            print(1)
         except:
-            print(2)
             rev = json.loads("{}")
         i["reviews"][j] = rev
         

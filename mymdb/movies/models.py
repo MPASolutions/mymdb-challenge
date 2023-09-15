@@ -10,7 +10,6 @@ class Movie(models.Model):
     description = models.CharField(max_length=20000, default='')
     director = models.ForeignKey(Person, on_delete=models.DO_NOTHING)
     scripts = models.JSONField(default=None)
-    object_id = GenericRelation("reviews.Review")
     created_at = models.DateTimeField(default=datetime.now)
     updated_at = models.DateTimeField(default=datetime.now)
     

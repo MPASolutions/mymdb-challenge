@@ -47,6 +47,6 @@ class ReviewDetailAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        review = review.get_review(pk)
+        review = self.get_review(pk)
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
